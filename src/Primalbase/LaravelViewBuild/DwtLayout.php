@@ -1,5 +1,7 @@
 <?php namespace Primalbase\LaravelViewBuild;
 
+use File;
+
 /**
  * Class DwtLayout
  * required PHP5.3
