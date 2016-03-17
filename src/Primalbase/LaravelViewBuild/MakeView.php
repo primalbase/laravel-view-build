@@ -11,46 +11,23 @@ class MakeView extends CommandBase {
 
   public function fire()
   {
-    $config = $this->getConfig();
-
     $view   = $this->argument('view');
     $source = $this->argument('source');
     $layout = $this->option('layout');
     $engine = $this->option('engine');
-    $noBase = $this->option('no-base');
+    $makeBase = !$this->option('no-base');
 
-    $viewPath = $this->getViewPath($view);
-    if ($noBase && file_exists($viewPath))
-    {
-      if (!$this->confirm('file exists. overwrite?[y/N]'))
-      {
-        $this->info('canceled.');
-        return;
-      }
-    }
-
-    if (preg_match('/^(.*[\:\.])([^.:]+)$/', $view, $m))
-    {
-      $baseView = $m[1].'base.'.$m[2];
-    }
-    else
-    {
-      $baseView = 'base.'.$view;
-    }
-
-    if (!file_exists(public_path($source)))
-    {
-      $this->error($source.' file not found.');
+    $viewPath = $this->getViewPath($view, $makeBase);
+    if (!$viewPath)
       return;
-    }
-    $dwtLayout = new DwtLayout($config['views_path'], $engine);
-    $dwtLayout->setOutputPath($viewPath);
-    $dwtLayout->setLayout($layout);
-    $dwtLayout->setSource($source);
-    $dwtLayout->setBaseView($baseView);
-    $dwtLayout->setEnabledMakeBase(!$noBase);
-    $dwtLayout->setDocumentRoot(public_path());
-    $dwtLayout->setStyle('view');
+
+    $sourcePath = $this->getSourcePath($source, false);
+    if (!$sourcePath)
+      return;
+
+    $baseView = $this->getBaseView($view);
+
+    $dwtLayout = $this->getDwtLayout($source, $viewPath, $layout, $makeBase, $baseView, 'view');
     $dwtLayout->save($engine);
     $this->info('saved to '.$dwtLayout->saved());
   }

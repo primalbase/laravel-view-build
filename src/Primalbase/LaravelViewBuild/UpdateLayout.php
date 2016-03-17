@@ -11,30 +11,22 @@ class UpdateLayout extends CommandBase {
 
   public function fire()
   {
-    $config = $this->getConfig();
+    $source   = $this->option('source');
+    $layout   = $this->option('layout');
+    $engine   = $this->option('engine');
+    $makeBase = !$this->option('no-base');
 
-    $source = $this->option('source');
-    $layout = $this->option('layout');
-    $engine = $this->option('engine');
-    $noBase = $this->option('no-base');
+    $viewPath = $this->getViewPath($layout, $makeBase);
+    if (!$viewPath)
+      return;
 
-    if (preg_match('/^(.*[\:\.])([^.:]+)$/', $layout, $m))
-    {
-      $baseView = $m[1].'base.'.$m[2];
-    }
-    else
-    {
-      $baseView = 'base.'.$layout;
-    }
+    $sourcePath = $this->getSourcePath($source);
+    if (!$sourcePath)
+      return;
 
-    $viewPath = $this->getViewPath($layout);
-    $dwtLayout = new DwtLayout;
-    $dwtLayout->setOutputPath($viewPath);
-    $dwtLayout->setLayout($layout);
-    $dwtLayout->setSource($config['templates_dir'].'/'.$source);
-    $dwtLayout->setEnabledMakeBase(!$noBase);
-    $dwtLayout->setBaseView($baseView);
-    $dwtLayout->setDocumentRoot(public_path());
+    $baseView = $this->getBaseView($layout);
+
+    $dwtLayout = $this->getDwtLayout($sourcePath, $viewPath, $layout, $makeBase, $baseView, 'layout');
     $dwtLayout->save($engine);
     $this->info('saved to '.$dwtLayout->saved());
   }
