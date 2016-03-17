@@ -1,0 +1,20 @@
+{
+    "name": "primalbase/laravel-view-build",
+    "description": "",
+    "authors": [
+        {
+            "name": "Hiroshi Kawai",
+            "email": "kawai@primalbase.jp"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Primalbase\\LaravelViewBuild": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
