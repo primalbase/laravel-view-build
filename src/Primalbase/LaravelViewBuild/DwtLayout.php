@@ -285,7 +285,7 @@ __BLADE__;
     return $html;
   }
 
-  public function renderInclude($engine = null)
+  public function renderExtends($engine = null)
   {
     if (!is_null($engine))
     {
@@ -295,7 +295,7 @@ __BLADE__;
     $view = '';
     $baseView = $this->baseView;
     $view.=<<<__BLADE__
-@include('$baseView')
+@extends('$baseView')
 
 __BLADE__;
 
@@ -327,7 +327,7 @@ __BLADE__;
       file_put_contents($base_dir.'/'.$base_name, $this->render($engine));
       if (!file_exists($this->output_path))
       {
-        file_put_contents($this->output_path, $this->renderInclude($engine));
+        file_put_contents($this->output_path, $this->renderExtends($engine));
       }
     }
     else
