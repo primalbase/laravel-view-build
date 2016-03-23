@@ -27,19 +27,24 @@ class ServiceProvider extends BaseServiceProvider {
       return new MakeView();
     });
 
-    $this->app->bind('primalbase::command.layout.update', function($app)
+    $this->app->bind('primalbase::command.layout.make', function($app)
     {
-      return new UpdateLayout();
+      return new MakeLayout();
     });
 
     $this->app->bind('primalbase::command.view.update', function($app) {
       return new UpdateView();
     });
 
+    $this->app->bind('primalbase::command.layout.update', function($app) {
+      return new UpdateLayout();
+    });
+
     $this->commands(array(
       'primalbase::command.view.make',
-      'primalbase::command.layout.update',
+      'primalbase::command.layout.make',
       'primalbase::command.view.update',
+      'primalbase::command.layout.update',
     ));
 
   }

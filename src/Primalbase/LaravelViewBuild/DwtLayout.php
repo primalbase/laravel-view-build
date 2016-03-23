@@ -255,13 +255,12 @@ class DwtLayout
     {
       $view = '';
       $layout = $this->layout;
-      $generatedAt = \Carbon\Carbon::now()->format('Y/m/d H:i:s');
       $source = $this->source;
       $output = $this->output_path;
       $view.=<<<__BLADE__
 <?php
 /**
- * This file auto generated at $generatedAt.
+ * auto generated.
  * From $source
  * To $output
  */
