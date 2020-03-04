@@ -1,6 +1,7 @@
 {
     "name": "primalbase/laravel-view-build",
     "description": "",
+    "license": "BSD-2-Clause-FreeBSD",
     "authors": [
         {
             "name": "Hiroshi Kawai",
